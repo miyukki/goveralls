@@ -429,6 +429,8 @@ func process() error {
 
 	if *service == "" && os.Getenv("TRAVIS_JOB_ID") != "" {
 		*service = "travis-ci"
+	} else if *service == "" && os.Getenv("CIRCLECI") != "" {
+		*service = "circleci"
 	}
 
 	sourceFiles, err := getCoverage()

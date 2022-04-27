@@ -1,4 +1,4 @@
-module github.com/mattn/goveralls
+module github.com/miyukki/goveralls
 
 go 1.17
 

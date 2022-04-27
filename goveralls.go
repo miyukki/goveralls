@@ -62,6 +62,7 @@ var (
 	parallel      = flag.Bool("parallel", os.Getenv("COVERALLS_PARALLEL") != "", "Submit as parallel")
 	endpoint      = flag.String("endpoint", "https://coveralls.io", "Hostname to submit Coveralls data to")
 	service       = flag.String("service", "", "The CI service or other environment in which the test suite was run. ")
+	serviceNumber = flag.String("servicenumber", "", "Custom set service number")
 	shallow       = flag.Bool("shallow", false, "Shallow coveralls internal server errors")
 	ignore        = flag.String("ignore", "", "Comma separated files to ignore")
 	insecure      = flag.Bool("insecure", false, "Set insecure to skip verification of certificates")
@@ -99,6 +100,7 @@ type SourceFile struct {
 type Job struct {
 	RepoToken          *string       `json:"repo_token,omitempty"`
 	ServiceJobID       string        `json:"service_job_id"`
+	ServiceNumber      string        `json:"service_number,omitempty"`
 	ServiceJobNumber   string        `json:"service_job_number,omitempty"`
 	ServicePullRequest string        `json:"service_pull_request,omitempty"`
 	ServiceName        string        `json:"service_name"`
@@ -457,6 +459,7 @@ func process() error {
 	if jobID != "" {
 		j.ServiceJobID = jobID
 	}
+	j.ServiceNumber = *serviceNumber
 	j.ServiceJobNumber = *jobNumber
 
 	// Ignore files
